@@ -14,7 +14,7 @@ const profiles = {
             upiFreq: 120,       // Transactions per day
             upiMonthlyVal: 480000,
             upiAvgTicket: 1350,
-            epfoStaff: 0,
+            epfoStaff: 3,
             powerConsumption: 240, // kWh per month
             aaBalance: 120000    // Average balance (INR)
         },
@@ -353,6 +353,10 @@ function calculateSahyogScore(gstVal, upiDailyTx, epfoStaffVal, powerVal, aaVal,
     let totalEpfoScore = 0;
     if (epfoStaffVal > 0) {
         totalEpfoScore = Math.min(180, 50 + (epfoStaffVal / 20) * 130);
+        // Ensure retail/service gets at least the sole-proprietorship baseline score
+        if (profileType === "retail" || profileType === "service") {
+            totalEpfoScore = Math.max(totalEpfoScore, 135);
+        }
     } else {
         // Retail/Service sole proprietors do not have registered corporate workers, do not penalize them
         if (profileType === "retail" || profileType === "service") {
