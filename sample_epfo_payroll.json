@@ -1,0 +1,11 @@
+{
+  "epfo_payroll_return": {
+    "establishment_id": "MHBAN1234567000",
+    "company_name": "Ramesh Garments Private Limited",
+    "wage_month": "June 2026",
+    "number_of_members": 24,
+    "total_wages_released": 444000.00,
+    "total_contribution_deposited": 53280.00,
+    "filing_status": "SUCCESS"
+  }
+}

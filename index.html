@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IDBI MSME Sahyog - Financial Health Cockpit</title>
+    <!-- Google Fonts: Inter & Plus Jakarta Sans -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- FontAwesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Chart.js via CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- TOP NAVIGATION BAR -->
+        <header class="app-header">
+            <div class="header-left">
+                <div class="logo-container">
+                    <svg class="idbi-logo-svg" viewBox="0 0 100 100" width="28" height="28" style="vertical-align: middle; margin-right: 6px;">
+                        <circle cx="50" cy="50" r="45" fill="#fff" />
+                        <rect x="45" y="36" width="10" height="38" rx="4" fill="#ff3c00" />
+                        <circle cx="50" cy="23" r="6" fill="#ff3c00" />
+                        <path d="M 40,18 C 22,28 22,72 40,82 C 32,70 32,30 40,18 Z" fill="#ff3c00" />
+                        <path d="M 60,18 C 78,28 78,72 60,82 C 68,70 68,30 60,18 Z" fill="#ff3c00" />
+                    </svg>
+                    <span class="idbi-brand">IDBI <span class="accent-text">BANK</span></span>
+                </div>
+                <div class="divider"></div>
+                <div class="project-title">
+                    <h1>MSME Sahyog</h1>
+                    <span class="badge-innovate">IDBI INNOVATE 2026</span>
+                </div>
+            </div>
+            <div class="header-right">
+                <button class="theme-toggle-btn" id="theme-toggle" title="Toggle Light/Dark Theme">
+                    <i class="fa-solid fa-moon"></i>
+                </button>
+                <div class="track-info">
+                    <span class="track-label">Track 03</span>
+                    <span class="track-name">Financial Health Score</span>
+                </div>
+                <div class="user-profile">
+                    <i class="fa-solid fa-user-tie"></i>
+                    <div class="user-details">
+                        <span class="user-name">Rituraj S. Rathore</span>
+                        <span class="user-role">DGM - Underwriting</span>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- MAIN LAYOUT -->
+        <main class="main-content">
+            <!-- LEFT PANEL: SIMULATOR & CONTROL COCKPIT -->
+            <section class="control-panel">
+                <div class="panel-header">
+                    <h2><i class="fa-solid fa-sliders"></i> Simulation Cockpit</h2>
+                    <p class="panel-subtitle">Select MSME profile or adjust parameters in real-time</p>
+                </div>
+
+                <!-- PRESET SELECTOR -->
+                <div class="control-section">
+                    <h3>Merchant Profiles</h3>
+                    <div class="profile-grid">
+                        <button class="profile-btn active" data-profile="kirana">
+                            <span class="profile-icon"><i class="fa-solid fa-store"></i></span>
+                            <div class="profile-btn-info">
+                                <span class="profile-title">Karan Kirana</span>
+                                <span class="profile-tag tag-yes">Yes-Go (Retail)</span>
+                            </div>
+                        </button>
+                        <button class="profile-btn" data-profile="mfg">
+                            <span class="profile-icon"><i class="fa-solid fa-industry"></i></span>
+                            <div class="profile-btn-info">
+                                <span class="profile-title">Apex Auto Parts</span>
+                                <span class="profile-tag tag-yes">Yes-Go (Mfg)</span>
+                            </div>
+                        </button>
+                        <button class="profile-btn" data-profile="logistics">
+                            <span class="profile-icon"><i class="fa-solid fa-truck"></i></span>
+                            <div class="profile-btn-info">
+                                <span class="profile-title">Shiva Logistics</span>
+                                <span class="profile-tag tag-caution">Caution (Service)</span>
+                            </div>
+                        </button>
+                        <button class="profile-btn" data-profile="garment">
+                            <span class="profile-icon"><i class="fa-solid fa-shirt"></i></span>
+                            <div class="profile-btn-info">
+                                <span class="profile-title">Vertex Garments</span>
+                                <span class="profile-tag tag-nogo">No-Go (Mfg)</span>
+                            </div>
+                        </button>
+                    </div>
+                <!-- CREATE CUSTOM MERCHANT FORM -->
+                <div class="control-section" style="border-top: 1px solid var(--border-color); padding-top: 12px;">
+                    <h3>Add Custom Merchant</h3>
+                    <div style="display: flex; flex-direction: column; gap: 8px;">
+                        <input type="text" id="new-merchant-name" class="term-input" placeholder="e.g. Ramesh Kirana / Apex Garments" style="font-size: 0.75rem; padding: 6px;">
+                        <select id="new-merchant-sector" class="term-input" style="font-size: 0.75rem; padding: 6px;">
+                            <option value="retail">Retail / Wholesale Shop</option>
+                            <option value="manufacturing">Manufacturing / Factory Unit</option>
+                            <option value="service">Commercial Services / Logistics</option>
+                        </select>
+                        <button class="upload-btn" id="create-merchant-btn" style="width: 100%; margin-top: 4px; background-color: var(--idbi-teal); border-color: var(--idbi-teal); color: #ffffff !important;"><i class="fa-solid fa-plus"></i> Create Merchant Profile</button>
+                    </div>
+                </div>
+
+                <!-- FILE UPLOAD SIMULATOR -->
+                <div class="control-section">
+                    <h3>Alternative Data File Ingestion</h3>
+                    <div class="file-upload-zone" id="upload-zone">
+                        <i class="fa-solid fa-cloud-arrow-up"></i>
+                        <p>Drag & Drop alternative raw data log <br><span>(GST returns JSON, UPI transaction statement, DISCOM XML)</span></p>
+                        <input type="file" id="file-input" style="display: none;" accept=".json,.xml,.csv,.txt">
+                        <button class="upload-btn" id="upload-trigger-btn">Browse Files</button>
+                    </div>
+                    <div id="upload-success-toast" class="upload-toast hidden">
+                        <i class="fa-solid fa-circle-check"></i> File ingested successfully! Updating Sahyog Engine...
+                    </div>
+                    <div class="download-templates-row" style="margin-top: 10px; font-size: 0.65rem; text-align: center; color: var(--text-secondary); line-height: 1.4;">
+                        <span style="font-weight: 600; display: block; margin-bottom: 4px; color: var(--text-primary);">Download Sample Templates:</span>
+                        <a href="sample_gst_return.json" download style="color: var(--idbi-orange); text-decoration: underline; margin: 0 4px;">GST (JSON)</a> | 
+                        <a href="sample_upi_statement.csv" download style="color: var(--idbi-orange); text-decoration: underline; margin: 0 4px;">UPI (CSV)</a> | 
+                        <a href="sample_epfo_payroll.json" download style="color: var(--idbi-orange); text-decoration: underline; margin: 0 4px;">EPFO (JSON)</a> | 
+                        <a href="sample_electricity_bill.xml" download style="color: var(--idbi-orange); text-decoration: underline; margin: 0 4px;">DISCOM (XML)</a>
+                    </div>
+                </div>
+
+                <!-- METRICS TWEAKER SLIDERS -->
+                <div class="control-section">
+                    <div class="section-title-row">
+                        <h3>Alternative Data Inputs</h3>
+                        <button class="reset-btn" id="reset-sliders-btn" title="Reset to Preset Default"><i class="fa-solid fa-rotate-left"></i></button>
+                    </div>
+                    <div class="sliders-container">
+                        <!-- GST SALES -->
+                        <div class="slider-group">
+                            <div class="slider-label-row">
+                                <span class="slider-title"><i class="fa-solid fa-file-invoice-dollar gst-color"></i> GST Monthly Turnover</span>
+                                <span class="slider-value" id="gst-val-label">₹ 8.5L</span>
+                            </div>
+                            <input type="range" class="param-slider" id="gst-slider" min="0" max="3000000" step="50000" value="850000">
+                        </div>
+
+                        <!-- UPI VELOCITY -->
+                        <div class="slider-group">
+                            <div class="slider-label-row">
+                                <span class="slider-title"><i class="fa-brands fa-square-upwork upi-color"></i> UPI Tx Frequency (Daily)</span>
+                                <span class="slider-value" id="upi-val-label">120 tx</span>
+                            </div>
+                            <input type="range" class="param-slider" id="upi-slider" min="0" max="500" step="10" value="120">
+                        </div>
+
+                        <!-- EPFO COMPLIANCE -->
+                        <div class="slider-group">
+                            <div class="slider-label-row">
+                                <span class="slider-title"><i class="fa-solid fa-users epfo-color"></i> EPFO Employees Count</span>
+                                <span class="slider-value" id="epfo-val-label">14 staff</span>
+                            </div>
+                            <input type="range" class="param-slider" id="epfo-slider" min="0" max="100" step="1" value="14">
+                        </div>
+
+                        <!-- DISCOM ELECTRICITY -->
+                        <div class="slider-group">
+                            <div class="slider-label-row">
+                                <span class="slider-title"><i class="fa-solid fa-bolt power-color"></i> Electricity Consumption</span>
+                                <span class="slider-value" id="power-val-label">2,400 kWh</span>
+                            </div>
+                            <input type="range" class="param-slider" id="power-slider" min="0" max="10000" step="100" value="2400">
+                        </div>
+
+                        <!-- AA BALANCE STABILITY -->
+                        <div class="slider-group">
+                            <div class="slider-label-row">
+                                <span class="slider-title"><i class="fa-solid fa-building-columns aa-color"></i> AA Avg Bank Balance</span>
+                                <span class="slider-value" id="aa-val-label">₹ 1.2L</span>
+                            </div>
+                            <input type="range" class="param-slider" id="aa-slider" min="0" max="500000" step="10000" value="120000">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ECOSYSTEM GLOSSARY LEGEND -->
+                <div class="control-section glossary-section">
+                    <h3>Ecosystem Glossary</h3>
+                    <div class="glossary-card">
+                        <div class="glossary-item">
+                            <span class="glossary-term">AA (Account Aggregator):</span>
+                            <span class="glossary-definition">A consent-based financial data sharing network that lets lenders securely pull bank statements directly from the borrower's bank.</span>
+                        </div>
+                        <div class="glossary-item">
+                            <span class="glossary-term">ULI (Unified Lending Interface):</span>
+                            <span class="glossary-definition">An RBI initiative that provides a single interface for lenders to fetch multi-source alternate data (GST, land records, utilities) for instant risk analysis.</span>
+                        </div>
+                        <div class="glossary-item">
+                            <span class="glossary-term">OCEN (Open Credit Enablement Network):</span>
+                            <span class="glossary-definition">A protocol standardizing how digital apps/marketplaces integrate loans, enabling automated credit discovery, contracting, and disbursals.</span>
+                        </div>
+                        <div class="glossary-item">
+                            <span class="glossary-term">Alternative Data:</span>
+                            <span class="glossary-definition">Digital footprints like GST compliance, daily UPI sales, EPFO payroll registries, and electricity consumption to underwrite collateral-free loans.</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- RIGHT PANEL: IDBI SAHYOG CREDIT COCKPIT -->
+            <section class="cockpit-panel">
+                <!-- HERO SECTION: THE FINANCIAL HEALTH CARD -->
+                <div class="card-display-row">
+                    <!-- THE CARD -->
+                    <div class="sahyog-card-container">
+                        <div class="sahyog-card" id="sahyog-credit-card">
+                            <div class="card-mesh"></div>
+                            <div class="card-header">
+                                <div class="card-logo">
+                                    <svg class="idbi-logo-card-svg" viewBox="0 0 100 100" width="22" height="22" style="vertical-align: middle; margin-right: 6px;">
+                                        <circle cx="50" cy="50" r="45" fill="#fff" />
+                                        <rect x="45" y="36" width="10" height="38" rx="4" fill="#ff3c00" />
+                                        <circle cx="50" cy="23" r="6" fill="#ff3c00" />
+                                        <path d="M 40,18 C 22,28 22,72 40,82 C 32,70 32,30 40,18 Z" fill="#ff3c00" />
+                                        <path d="M 60,18 C 78,28 78,72 60,82 C 68,70 68,30 60,18 Z" fill="#ff3c00" />
+                                    </svg>
+                                    <span>IDBI BANK</span>
+                                </div>
+                                <div class="card-badge" id="card-decision-badge">YES-GO</div>
+                            </div>
+                            <div class="card-body">
+                                <div class="card-number">IDBI • SAHYOG • <span id="card-id">9842</span></div>
+                                <div class="card-merchant-name" id="card-name">Karan Kirana Store</div>
+                                <div class="card-meta">
+                                    <div class="meta-item">
+                                        <span class="meta-label">SAHYOG SCORE</span>
+                                        <span class="meta-value score-glow" id="card-score">785</span>
+                                    </div>
+                                    <div class="meta-item">
+                                        <span class="meta-label">CREDIT GRADE</span>
+                                        <span class="meta-value" id="card-grade">A</span>
+                                    </div>
+                                    <div class="meta-item">
+                                        <span class="meta-label">VERIFIED BY</span>
+                                        <span class="meta-value">ULI / OCEN</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- GAUGE CHART & DECISION INFO -->
+                    <div class="score-summary-panel">
+                        <div class="gauge-wrapper">
+                            <canvas id="gaugeChart" width="160" height="100"></canvas>
+                            <div class="gauge-center-text">
+                                <span class="gauge-score" id="gauge-score-val">785</span>
+                                <span class="gauge-max">/ 1000</span>
+                            </div>
+                        </div>
+                        <div class="decision-summary-text">
+                            <h3>Assessment Status</h3>
+                            <div class="status-indicator" id="status-indicator-badge">
+                                <span class="status-dot"></span>
+                                <span id="status-text">Disciplined Borrower</span>
+                            </div>
+                            <p class="status-description" id="status-desc-text">
+                                Healthy transaction flows, regular tax filing compliance, and stable local employment footprint. Highly recommended for short-term working capital.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- UNDERWRITING RISK CONTROLS -->
+                    <div class="risk-verification-panel glass-card">
+                        <h3><i class="fa-solid fa-shield-halved"></i> Risk Controls</h3>
+                        <div class="risk-checklist">
+                            <div class="risk-check-item" id="check-double-financing">
+                                <span class="check-icon"><i class="fa-solid fa-circle-notch fa-spin"></i></span>
+                                <div class="check-details">
+                                    <span class="check-title">GST Invoice De-duplication</span>
+                                    <span class="check-status" id="status-double-financing">Verifying CERSAI Registry...</span>
+                                </div>
+                            </div>
+                            <div class="risk-check-item" id="check-asset-pledge">
+                                <span class="check-icon"><i class="fa-solid fa-circle-notch fa-spin"></i></span>
+                                <div class="check-details">
+                                    <span class="check-title">Multiple Pledging Check</span>
+                                    <span class="check-status" id="status-asset-pledge">Checking CERSAI records...</span>
+                                </div>
+                            </div>
+                            <div class="risk-check-item" id="check-supplier-compliance">
+                                <span class="check-icon"><i class="fa-solid fa-circle-notch fa-spin"></i></span>
+                                <div class="check-details">
+                                    <span class="check-title">Supplier GST Filing (ITC)</span>
+                                    <span class="check-status" id="status-supplier-compliance">Analyzing GSTR-2B compliance...</span>
+                                </div>
+                            </div>
+                            <div class="risk-check-item" id="check-power-vitality">
+                                <span class="check-icon"><i class="fa-solid fa-circle-notch fa-spin"></i></span>
+                                <div class="check-details">
+                                    <span class="check-title">Operational Vitality (Power)</span>
+                                    <span class="check-status" id="status-power-vitality">Auditing DISCOM active load...</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ANALYTICS ROW: RADAR CHART & DATA DETAILS -->
+                <div class="analytics-row">
+                    <!-- RADAR CHART -->
+                    <div class="chart-container glass-card">
+                        <h3><i class="fa-solid fa-chart-pie"></i> Alternative Risk Profile</h3>
+                        <div class="canvas-holder">
+                            <canvas id="radarChart"></canvas>
+                        </div>
+                    </div>
+
+                    <!-- ALTERNATE DATA WIDGETS -->
+                    <div class="data-breakdown glass-card">
+                        <div class="data-tabs">
+                            <button class="tab-btn active" data-tab="gst"><i class="fa-solid fa-file-invoice-dollar gst-color"></i> GST</button>
+                            <button class="tab-btn" data-tab="upi"><i class="fa-brands fa-square-upwork upi-color"></i> UPI</button>
+                            <button class="tab-btn" data-tab="epfo"><i class="fa-solid fa-users epfo-color"></i> EPFO</button>
+                            <button class="tab-btn" data-tab="discom"><i class="fa-solid fa-bolt power-color"></i> Utility</button>
+                        </div>
+
+                        <div class="tab-content-container">
+                            <!-- GST TAB -->
+                            <div class="tab-content active" id="tab-gst">
+                                <div class="metrics-grid">
+                                    <div class="metric-card">
+                                        <span class="m-label">Annualized Turnover</span>
+                                        <span class="m-val" id="gst-turnover">₹ 1.02 Cr</span>
+                                    </div>
+                                    <div class="metric-card">
+                                        <span class="m-label">GST filing on-time %</span>
+                                        <span class="m-val success-text" id="gst-filing-rate">98.5%</span>
+                                    </div>
+                                    <div class="metric-card">
+                                        <span class="m-label">Client Concentration</span>
+                                        <span class="m-val" id="gst-concentration">Low (12 Buyers)</span>
+                                    </div>
+                                    <div class="metric-card">
+                                        <span class="m-label">Quarterly Growth</span>
+                                        <span class="m-val success-text" id="gst-growth">+14.2%</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- UPI TAB -->
+                            <div class="tab-content" id="tab-upi">
+                                <div class="metrics-grid">
+                                    <div class="metric-card">
+                                        <span class="m-label">Monthly Transaction Value</span>
+                                        <span class="m-val" id="upi-monthly-val">₹ 4.8L</span>
+                                    </div>
+                                    <div class="metric-card">
+                                        <span class="m-label">Avg Daily Tx Count</span>
+                                        <span class="m-val" id="upi-tx-count">120 transactions</span>
+                                    </div>
+                                    <div class="metric-card">
+                                        <span class="m-label">Avg Ticket Size</span>
+                                        <span class="m-val" id="upi-ticket-size">₹ 1,350</span>
+                                    </div>
+                                    <div class="metric-card">
+                                        <span class="m-label">Cash Flow Velocity</span>
+                                        <span class="m-val success-text" id="upi-velocity">High (Consistent Daily Inflows)</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- EPFO TAB -->
+                            <div class="tab-content" id="tab-epfo">
+                                <div class="metrics-grid">
+                                    <div class="metric-card">
+                                        <span class="m-label">Registered Workers</span>
+                                        <span class="m-val" id="epfo-staff-count">14 Employees</span>
+                                    </div>
+                                    <div class="metric-card">
+                                        <span class="m-label">Contribution Frequency</span>
+                                        <span class="m-val success-text" id="epfo-frequency">12/12 Months</span>
+                                    </div>
+                                    <div class="metric-card">
+                                        <span class="m-label">Average Salary Base</span>
+                                        <span class="m-val" id="epfo-salary-base">₹ 18,500</span>
+                                    </div>
+                                    <div class="metric-card">
+                                        <span class="m-label">Staff Retention Rate</span>
+                                        <span class="m-val success-text" id="epfo-retention">85% (Last 12m)</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- UTILITY TAB -->
+                            <div class="tab-content" id="tab-discom">
+                                <div class="metrics-grid">
+                                    <div class="metric-card">
+                                        <span class="m-label">Average Monthly Consumption</span>
+                                        <span class="m-val" id="power-monthly-units">2,400 kWh</span>
+                                    </div>
+                                    <div class="metric-card">
+                                        <span class="m-label">Payment Timeline</span>
+                                        <span class="m-val success-text" id="power-payment-time">No defaults (Auto-debit)</span>
+                                    </div>
+                                    <div class="metric-card">
+                                        <span class="m-label">Operational Stability</span>
+                                        <span class="m-val" id="power-stability">98% Duty Cycle Matching</span>
+                                    </div>
+                                    <div class="metric-card">
+                                        <span class="m-label">DISCOM Area Risk</span>
+                                        <span class="m-val" id="power-discom-area">Low (Industrial Zone Grid)</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- AI EXPLAINER: CREDIT INSIGHTS PANEL (PROMPT WARS FOCUS) -->
+                <div class="ai-insights-panel glass-card">
+                    <div class="ai-panel-header">
+                        <div class="ai-badge">
+                            <i class="fa-solid fa-wand-magic-sparkles"></i> AI UNDERWRITER REMARKS (PROMPT-GENERATED)
+                        </div>
+                        <div class="lang-selector">
+                            <button class="lang-btn active" data-lang="en">EN</button>
+                            <button class="lang-btn" data-lang="hi">हिंदी</button>
+                            <button class="lang-btn" data-lang="mr">मराठी</button>
+                        </div>
+                    </div>
+                    <div class="ai-remarks-container">
+                        <div class="ai-remark-block strengths">
+                            <h4><i class="fa-solid fa-circle-plus"></i> Key Strengths</h4>
+                            <ul id="ai-strengths-list">
+                                <li>Robust transaction history with high invoice matching frequency.</li>
+                                <li>Utility consumption stability matches active manufacturing schedule.</li>
+                                <li>Regular, consistent EPFO payroll registry highlights workforce strength.</li>
+                            </ul>
+                        </div>
+                        <div class="ai-remark-block risks">
+                            <h4><i class="fa-solid fa-triangle-exclamation"></i> Key Risks</h4>
+                            <ul id="ai-risks-list">
+                                <li>Customer base is slightly concentrated to local retail market.</li>
+                                <li>Highly sensitive to raw materials price swings.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- INTEGRATION & DISBURSAL ROW (ULI / OCEN) -->
+                <div class="integration-panel glass-card">
+                    <div class="integration-header">
+                        <h3><i class="fa-solid fa-network-wired"></i> ULI & OCEN Integration Hub</h3>
+                        <button class="action-btn" id="disburse-btn"><i class="fa-solid fa-money-check-dollar"></i> Sanction & Disburse via ULI</button>
+                    </div>
+
+                    <div class="integration-details-grid">
+                        <div class="terms-summary">
+                            <h4>Sanction Terms (Manager Override)</h4>
+                            <div class="terms-grid">
+                                <div class="term-item">
+                                    <span class="t-label">Sanction Limit</span>
+                                    <input type="text" class="term-input" id="term-limit-input" value="₹ 15,00,000">
+                                </div>
+                                <div class="term-item">
+                                    <span class="t-label">Interest Rate (% p.a.)</span>
+                                    <input type="text" class="term-input" id="term-rate-input" value="10.25%">
+                                </div>
+                                <div class="term-item">
+                                    <span class="t-label">Tenure</span>
+                                    <select class="term-input" id="term-tenure-input">
+                                        <option value="6 Months">6 Months</option>
+                                        <option value="12 Months">12 Months</option>
+                                        <option value="18 Months" selected>18 Months</option>
+                                        <option value="24 Months">24 Months</option>
+                                        <option value="36 Months">36 Months</option>
+                                    </select>
+                                </div>
+                                <div class="term-item">
+                                    <span class="t-label">Underwriting Route</span>
+                                    <input type="text" class="term-input" id="term-route-input" value="EPFO + ULI Gateway" readonly>
+                                </div>
+                                <div class="term-item">
+                                    <span class="t-label">Repayment Sweepback</span>
+                                    <select class="term-input" id="term-sweepback-input">
+                                        <option value="Disabled (Monthly EMI)">Disabled (Monthly EMI)</option>
+                                        <option value="1.0% Daily UPI Sales">1.0% Daily UPI Sales</option>
+                                        <option value="2.0% Daily UPI Sales" selected>2.0% Daily UPI Sales</option>
+                                        <option value="3.0% Daily UPI Sales">3.0% Daily UPI Sales</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- LIVE API TERMINAL -->
+                        <div class="api-logs-terminal">
+                            <div class="terminal-header">
+                                <span><i class="fa-solid fa-terminal"></i> ULI / OCEN API Transaction Log</span>
+                                <div class="terminal-dots">
+                                    <span class="t-dot dot-red"></span>
+                                    <span class="t-dot dot-yellow"></span>
+                                    <span class="t-dot dot-green"></span>
+                                </div>
+                            </div>
+                            <div class="terminal-body" id="api-terminal-body">
+                                <div class="log-line text-muted">// Ready for credit sanction trigger. Click the button above to execute...</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- SCRIPT ENTRY -->
+    <script src="app.js"></script>
+</body>
+</html>

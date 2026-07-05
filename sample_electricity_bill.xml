@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<discom_billing_statement>
+    <consumer_metadata>
+        <consumer_no>DISCOM-MH-9837482</consumer_no>
+        <registered_name>Ramesh Garments Private Limited</registered_name>
+        <trade_name>Ramesh Garments</trade_name>
+        <tariff_category>LT-V Industrial</tariff_category>
+        <sanctioned_load_kw>45.0</sanctioned_load_kw>
+        <billing_address>Plot G-22, MIDC Garment Zone, Pune, Maharashtra - 411028</billing_address>
+    </consumer_metadata>
+    <billing_history>
+        <billing_cycle month="June" year="2026">
+            <units_consumed_kwh>4800</units_consumed_kwh>
+            <power_factor>0.96</power_factor>
+            <bill_amount_inr>42850.00</bill_amount_inr>
+            <payment_status>SUCCESS_AUTO_DEBIT</payment_status>
+            <payment_date>2026-06-15</payment_date>
+        </billing_cycle>
+        <billing_cycle month="May" year="2026">
+            <units_consumed_kwh>4710</units_consumed_kwh>
+            <power_factor>0.95</power_factor>
+            <bill_amount_inr>41900.00</bill_amount_inr>
+            <payment_status>SUCCESS_AUTO_DEBIT</payment_status>
+            <payment_date>2026-05-15</payment_date>
+        </billing_cycle>
+        <billing_cycle month="April" year="2026">
+            <units_consumed_kwh>4950</units_consumed_kwh>
+            <power_factor>0.97</power_factor>
+            <bill_amount_inr>43800.00</bill_amount_inr>
+            <payment_status>SUCCESS_AUTO_DEBIT</payment_status>
+            <payment_date>2026-04-15</payment_date>
+        </billing_cycle>
+    </billing_history>
+    <operational_baseline_audit>
+        <grid_stability_rating>98.5% Active Load Match</grid_stability_rating>
+        <factory_shift_active_validation>VERIFIED_3_SHIFTS_ACTIVE</factory_shift_active_validation>
+    </operational_baseline_audit>
+</discom_billing_statement>

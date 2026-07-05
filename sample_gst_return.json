@@ -1,0 +1,30 @@
+{
+  "gstn_return_filing": {
+    "merchant_legal_name": "Ramesh Garments Private Limited",
+    "trade_name": "Ramesh Garments",
+    "gstin": "27AABCR5678D1Z8",
+    "financial_year": "2026-27",
+    "tax_period": "June 2026",
+    "filing_status": "FILED_ON_TIME",
+    "filing_date": "2026-07-10",
+    "invoice_summary": {
+      "total_active_invoices": 45,
+      "total_taxable_value": 2400000.00,
+      "total_igst": 216000.00,
+      "total_cgst": 108000.00,
+      "total_sgst": 108000.00,
+      "total_gst_paid": 432000.00
+    },
+    "client_concentration": [
+      { "buyer_name": "Reliance Retail Ltd", "share_pct": 35.0 },
+      { "buyer_name": "Shoppers Stop Ltd", "share_pct": 30.0 },
+      { "buyer_name": "Lifestyle Retail India", "share_pct": 20.0 },
+      { "buyer_name": "Deccan Apparels", "share_pct": 15.0 }
+    ],
+    "deduplication_hash_check": {
+      "registry": "CERSAI_GSTN_INVOICE_LEDGER",
+      "duplicate_instances_found": 0,
+      "verification_status": "CLEAN"
+    }
+  }
+}

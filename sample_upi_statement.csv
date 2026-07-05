@@ -1,0 +1,13 @@
+MerchantID,MerchantName,Timestamp,PayerUPI,PayerName,Amount(INR),PaymentStatus,Channel
+MID837492,Ramesh Garments,2026-06-15T09:12:00,reliance@oksbi,Reliance Retail Accounts,45000.00,SUCCESS,UPI_COLLECT
+MID837492,Ramesh Garments,2026-06-15T10:15:32,shoppers@paytm,Shoppers Stop Vendor,32000.00,SUCCESS,UPI_COLLECT
+MID837492,Ramesh Garments,2026-06-15T11:02:11,lifestyle@icici,Lifestyle Treasury,18500.00,SUCCESS,UPI_COLLECT
+MID837492,Ramesh Garments,2026-06-15T12:22:45,reliance@oksbi,Reliance Retail Accounts,24500.00,SUCCESS,UPI_COLLECT
+MID837492,Ramesh Garments,2026-06-15T13:05:12,pantaloons@ybl,Pantaloons Vendor Desk,55000.00,SUCCESS,UPI_COLLECT
+MID837492,Ramesh Garments,2026-06-15T14:18:29,deccan_apparels@ybl,Deccan Apparels Corp,12500.00,SUCCESS,QR_CODE
+MID837492,Ramesh Garments,2026-06-15T15:00:02,mumbai_retail@paytm,Mumbai Fashion Hub,15000.00,SUCCESS,QR_CODE
+MID837492,Ramesh Garments,2026-06-15T15:45:30,shoppers@paytm,Shoppers Stop Vendor,28000.00,SUCCESS,UPI_COLLECT
+MID837492,Ramesh Garments,2026-06-15T16:12:55,lifestyle@icici,Lifestyle Treasury,24500.00,SUCCESS,UPI_COLLECT
+MID837492,Ramesh Garments,2026-06-15T17:35:10,pune_boutique@oksbi,Pune Clothing Spares,9500.00,SUCCESS,QR_CODE
+MID837492,Ramesh Garments,2026-06-15T18:10:00,reliance@oksbi,Reliance Retail Accounts,38000.00,SUCCESS,UPI_COLLECT
+MID837492,Ramesh Garments,2026-06-15T19:42:15,deccan_apparels@icici,Deccan Apparels Corp,14500.00,SUCCESS,QR_CODE
