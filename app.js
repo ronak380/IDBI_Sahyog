@@ -71,7 +71,7 @@ const profiles = {
             upiMonthlyVal: 1225000,
             upiAvgTicket: 24500,
             epfoStaff: 18,
-            powerConsumption: 4800,
+            powerConsumption: 4920,
             aaBalance: 310000
         },
         aiRemarks: {
