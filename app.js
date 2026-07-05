@@ -354,8 +354,12 @@ function calculateSahyogScore(gstVal, upiDailyTx, epfoStaffVal, powerVal, aaVal,
     if (epfoStaffVal > 0) {
         totalEpfoScore = Math.min(180, 50 + (epfoStaffVal / 20) * 130);
     } else {
-        // Micro sole proprietors get a baseline workforce score if other metrics are healthy
-        totalEpfoScore = (gstVal > 500000) ? 60 : 30;
+        // Retail/Service sole proprietors do not have registered corporate workers, do not penalize them
+        if (profileType === "retail" || profileType === "service") {
+            totalEpfoScore = 135;
+        } else {
+            totalEpfoScore = (gstVal > 500000) ? 60 : 30;
+        }
     }
 
     // 4. Operational Vitality DISCOM Score Component (Max 180)
@@ -364,8 +368,8 @@ function calculateSahyogScore(gstVal, upiDailyTx, epfoStaffVal, powerVal, aaVal,
     if (profileType === "manufacturing") {
         totalPowerScore = Math.min(180, (powerVal / 5000) * 180);
     } else {
-        // Retail/Services consume less power, benchmark scale accordingly
-        totalPowerScore = Math.min(180, (powerVal / 800) * 180);
+        // Retail/Services consume less power, benchmark scale accordingly (maxed at 400 kWh)
+        totalPowerScore = Math.min(180, (powerVal / 400) * 180);
     }
     // Baseline electricity operational score for minimal utility setups
     if (totalPowerScore < 40 && powerVal > 50) totalPowerScore = 50;
